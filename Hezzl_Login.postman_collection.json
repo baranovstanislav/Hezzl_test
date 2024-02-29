@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "23ac1241-4efe-4eba-9fac-942079a3f548",
+		"name": "Hezzl_Login",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27766873"
+	},
+	"item": [
+		{
+			"name": "CheckLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response_1 = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"accessToken\", response_1.accessToken);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"login\": {{email}}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/v1/game/:campaignId/check-login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"v1",
+						"game",
+						":campaignId",
+						"check-login"
+					],
+					"variable": [
+						{
+							"key": "campaignId",
+							"value": "{{campaignId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConfirmCode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{accessToken}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"code\": {{password}}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/v1/game/:campaignId/confirm-code",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"v1",
+						"game",
+						":campaignId",
+						"confirm-code"
+					],
+					"variable": [
+						{
+							"key": "campaignId",
+							"value": "{{campaignId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
